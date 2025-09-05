@@ -1,43 +1,82 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
-
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { HapticTab } from "@/components/HapticTab";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import { Colors } from "@/constants/Colors";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Tabs } from "expo-router";
+import React from "react";
+import { Platform, View } from "react-native";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors.white,
+        tabBarInactiveTintColor: Colors.gray,
         headerShown: false,
+        tabBarShowLabel: false,
         tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+        tabBarStyle: {
+          backgroundColor: Colors.black,
+          borderTopWidth: 0,
+          height: 90,
+          paddingTop: 10,
+          ...Platform.select({
+            ios: {
+              position: "absolute",
+              backgroundColor: Colors.black,
+            },
+            default: {},
+          }),
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Home",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="home-filled" size={24} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="inbox"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Inbox",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="inbox" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: "Search",
+          tabBarIcon: ({ color }) => (
+            <View className="items-center justify-center p-3 bg-[#808080]/50 rounded-xl">
+              <IconSymbol size={28} name="magnifyingglass" color={color} />
+            </View>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="issues"
+        options={{
+          title: "Issues",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="center-focus-strong" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="create"
+        options={{
+          title: "Create",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="create-outline" size={24} color={color} />
+          ),
         }}
       />
     </Tabs>
