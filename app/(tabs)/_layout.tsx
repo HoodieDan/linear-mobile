@@ -1,4 +1,5 @@
 import { HapticTab } from "@/components/HapticTab";
+import { TabHeader } from "@/components/tabs/tab-header";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { Colors } from "@/constants/Colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -13,21 +14,21 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors.white,
-        tabBarInactiveTintColor: Colors.gray,
-        headerShown: false,
+        tabBarInactiveTintColor: Colors.graniteGray,
+        headerShown: true,
+        header: () => <TabHeader />,
         tabBarShowLabel: false,
         tabBarButton: HapticTab,
         tabBarStyle: {
           backgroundColor: Colors.black,
           borderTopWidth: 0,
-          height: 90,
+          height: 50,
           paddingTop: 10,
           ...Platform.select({
             ios: {
               position: "absolute",
               backgroundColor: Colors.black,
             },
-            default: {},
           }),
         },
       }}
@@ -45,6 +46,7 @@ export default function TabLayout() {
         name="inbox"
         options={{
           title: "Inbox",
+          header: () => <TabHeader variant="menu" />,
           tabBarIcon: ({ color }) => (
             <FontAwesome name="inbox" size={24} color={color} />
           ),
@@ -65,6 +67,7 @@ export default function TabLayout() {
         name="issues"
         options={{
           title: "Issues",
+          header: () => <TabHeader variant="menu" />,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="center-focus-strong" size={24} color={color} />
           ),
