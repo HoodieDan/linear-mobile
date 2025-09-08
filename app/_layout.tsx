@@ -20,6 +20,15 @@ const queryClient = new QueryClient({
 });
 
 export default function RootLayout() {
+  // const [loaded] = useFonts({
+  //   SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  // });
+
+  // if (!loaded) {
+  //   // Async font loading only occurs in development.
+  //   return null;
+  // }
+
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaView className="flex-1 bg-black">

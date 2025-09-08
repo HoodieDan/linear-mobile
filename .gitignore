@@ -38,4 +38,8 @@ yarn-error.*
 
 app-example
 
+# Tempo-specific files
+**/tempobook/dynamic/
+**/tempobook/storyboards/
+
 .env
