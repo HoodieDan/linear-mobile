@@ -10,7 +10,7 @@ export default function InboxScreen() {
       <H6Text className="text-white mb-4">Inbox</H6Text>
       <ScrollView className="bg-black" contentContainerStyle={{ flex: 1 }}>
         <View className="flex-1 items-center justify-center">
-          <FontAwesome name="inbox" size={200} color={Colors.graniteGray} />
+          <FontAwesome name="inbox" size={150} color={Colors.graniteGray} />
           <SmallText className="text-graniteGray">No notifications</SmallText>
         </View>
       </ScrollView>
