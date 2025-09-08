@@ -2,7 +2,7 @@ import { useGoogleSignIn } from "@/hooks/api/auth";
 import { useAuthStore } from "@/store/auth";
 import { Redirect } from "expo-router";
 import {
-  ActivityIndicator,
+  // ActivityIndicator,
   Alert,
   Text,
   TouchableOpacity,
@@ -21,7 +21,6 @@ export default function AuthPage() {
     }
   };
 
-  // ✅ Already logged in? Send straight to the app
   if (isAuthenticated) {
     return <Redirect href="/(tabs)" />;
   }

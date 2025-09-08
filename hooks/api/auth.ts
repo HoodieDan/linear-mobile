@@ -8,7 +8,7 @@ import * as WebBrowser from "expo-web-browser";
 WebBrowser.maybeCompleteAuthSession();
 
 async function signInWithGoogle() {
-  const redirectTo = Linking.createURL("/(tabs)");
+  const redirectTo = Linking.createURL("/");
   console.log("Redirect URI:", redirectTo);
 
   const { data, error } = await supabase.auth.signInWithOAuth({
@@ -18,18 +18,14 @@ async function signInWithGoogle() {
 
   if (error) throw error;
 
+  // Just open the auth URL, don’t wait for a result
   if (data?.url) {
-    const result = await WebBrowser.openAuthSessionAsync(data.url, redirectTo);
-    console.log("Auth session result:", result);
-
-    if (result.type === "success" && result.url) {
-      console.log("Redirected to:", result.url);
-      return result; // return the auth result to React Query
-    }
+    await WebBrowser.openAuthSessionAsync(data.url, redirectTo);
   }
 
   return null;
 }
+
 
 export function useGoogleSignIn() {
   return useMutation({
@@ -39,10 +35,6 @@ export function useGoogleSignIn() {
     },
     onSuccess: async (data) => {
       console.log("✅ Google login success:", data);
-      const session = data?.url
-        ? (await supabase.auth.getSession()).data.session
-        : null;
-      console.log("Restored session:", session);
       useAuthStore.getState().setAuth(true);
     },
   });

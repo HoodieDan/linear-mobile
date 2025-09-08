@@ -1,6 +1,6 @@
 // store/auth.ts
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Session, User } from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -8,7 +8,6 @@ interface AuthState {
   hasOnboarded: boolean;
   isAuthenticated: boolean;
   user: User | null;
-  loading: boolean;
   setOnboarded: () => void;
   setAuth: (value: boolean) => void;
   reset: () => void;
@@ -20,7 +19,6 @@ export const useAuthStore = create<AuthState>()(
       hasOnboarded: false,
       isAuthenticated: false,
       user: null,
-      loading: true,
       setOnboarded: () => {
         console.log("Setting onboarded to true");
         set({ hasOnboarded: true });
@@ -35,7 +33,6 @@ export const useAuthStore = create<AuthState>()(
         });
         set({
           isAuthenticated: value,
-          loading: false,
         });
       },
       reset: () => {
@@ -44,7 +41,6 @@ export const useAuthStore = create<AuthState>()(
           hasOnboarded: false,
           isAuthenticated: false,
           user: null,
-          loading: false,
         });
       },
     }),
