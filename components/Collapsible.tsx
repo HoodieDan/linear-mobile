@@ -1,45 +1,47 @@
-import { PropsWithChildren, useState } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Colors } from "@/constants/Colors";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import clsx from "clsx";
+import { PropsWithChildren, useState } from "react";
+import { TouchableOpacity, View } from "react-native";
+import SmallText from "./common/text-utils/smalltext";
 
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+type CollapsibleProps = PropsWithChildren<{
+  title: string;
+  className?: string;
+  headingClassName?: string;
+  contentClassName?: string;
+}>;
 
-export function Collapsible({ children, title }: PropsWithChildren & { title: string }) {
+export function Collapsible({
+  children,
+  title,
+  className = "",
+  headingClassName = "",
+  contentClassName = "",
+}: CollapsibleProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const theme = useColorScheme() ?? 'light';
 
   return (
-    <ThemedView>
+    <View className={clsx(className)}>
       <TouchableOpacity
-        style={styles.heading}
+        className={clsx(
+          "flex-row items-center justify-between gap-1.5",
+          headingClassName
+        )}
         onPress={() => setIsOpen((value) => !value)}
-        activeOpacity={0.8}>
-        <IconSymbol
-          name="chevron.right"
-          size={18}
-          weight="medium"
-          color={theme === 'light' ? Colors.light.icon : Colors.dark.icon}
-          style={{ transform: [{ rotate: isOpen ? '90deg' : '0deg' }] }}
+        activeOpacity={0.8}
+      >
+        <SmallText className="text-graniteGray">{title}</SmallText>
+        <Ionicons
+          name="chevron-expand-outline"
+          size={12}
+          color={Colors.graniteGray}
         />
-
-        <ThemedText type="defaultSemiBold">{title}</ThemedText>
       </TouchableOpacity>
-      {isOpen && <ThemedView style={styles.content}>{children}</ThemedView>}
-    </ThemedView>
+
+      {isOpen && (
+        <View className={clsx("mt-3 mb-3", contentClassName)}>{children}</View>
+      )}
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  heading: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  content: {
-    marginTop: 6,
-    marginLeft: 24,
-  },
-});
